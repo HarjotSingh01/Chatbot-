@@ -1,31 +1,26 @@
 import nltk
 import warnings
 warnings.filterwarnings("ignore")
-# nltk.download() # for downloading packages
+# nltk.download() # to download packages
 #import tensorflow as tf
 import numpy as np
 import random
-import string # to process standard python strings
+import string
 
-f=open('nlp python answer finals.txt','r',errors = 'ignore')
-m=open('modules pythons.txt','r',errors = 'ignore')
+f=open('finals.txt','r',errors = 'ignore')
+m=open('modules.txt','r',errors = 'ignore')
 checkpoint = "./chatbot_weights.ckpt"
-#session = tf.InteractiveSession()
-#session.run(tf.global_variables_initializer())
-#saver = tf.train.Saver()
-#saver.restore(session, checkpoint)
 
 raw=f.read()
 rawone=m.read()
 raw=raw.lower()# converts to lowercase
 rawone=rawone.lower()# converts to lowercase
-nltk.download('punkt') # first-time use only
-nltk.download('wordnet') # first-time use only
+nltk.download('punkt') 
+nltk.download('wordnet')
 sent_tokens = nltk.sent_tokenize(raw)# converts to list of sentences 
 word_tokens = nltk.word_tokenize(raw)# converts to list of words
-sent_tokensone = nltk.sent_tokenize(rawone)# converts to list of sentences 
-word_tokensone = nltk.word_tokenize(rawone)# converts to list of words
-
+sent_tokensone = nltk.sent_tokenize(rawone)
+word_tokensone = nltk.word_tokenize(rawone)
 
 sent_tokens[:2]
 sent_tokensone[:2]
@@ -40,11 +35,9 @@ remove_punct_dict = dict((ord(punct), None) for punct in string.punctuation)
 def LemNormalize(text):
     return LemTokens(nltk.word_tokenize(text.lower().translate(remove_punct_dict)))
 
-Introduce_Ans = ["My name is PyBot.","My name is PyBot you can called me pi.","Im PyBot :) ","My name is PyBot. and my nickname is pi and i am happy to solve your queries :) "]
+Introduce_Ans = ["My name is Bot.","My name is Bot you can called me pi.","Im Bot :) ","My name is Bot. and my nickname is pi and i am happy to solve your queries :) "]
 GREETING_INPUTS = ("hello", "hi","hiii","hii","hiiii","hiiii", "greetings", "sup", "what's up","hey",)
 GREETING_RESPONSES = ["hi", "hey", "hii there", "hi there", "hello", "I am glad! You are talking to me"]
-Basic_Q = ("what is python ?","what is python","what is python?","what is python.")
-Basic_Ans = "Python is a high-level, interpreted, interactive and object-oriented scripting programming language python is designed to be highly readable It uses English keywords frequently where as other languages use punctuation, and it has fewer syntactical constructions than other languages."
 Basic_Om = ("what is module","what is module.","what is module ","what is module ?","what is module?","what is module in python","what is module in python.","what is module in python?","what is module in python ?")
 Basic_AnsM = ["Consider a module to be the same as a code library.","A file containing a set of functions you want to include in your application.","A module can define functions, classes and variables. A module can also include runnable code. Grouping related code into a module makes the code easier to understand and use."]
 
@@ -55,12 +48,6 @@ def greeting(sentence):
     for word in sentence.split():
         if word.lower() in GREETING_INPUTS:
             return random.choice(GREETING_RESPONSES)
-
-# Checking for Basic_Q
-def basic(sentence):
-    for word in Basic_Q:
-        if sentence.lower() == word:
-            return Basic_Ans
 
 # Checking for Basic_QM
 def basicM(sentence):
@@ -90,7 +77,7 @@ def response(user_response):
     flat.sort()
     req_tfidf = flat[-2]
     if(req_tfidf==0):
-        robo_response=robo_response+"I am sorry! I don't understand you"
+        robo_response=robo_response+"I am sorry! I could'nt understand you"
         return robo_response
     else:
         robo_response = robo_response+sent_tokens[idx]
@@ -108,7 +95,7 @@ def responseone(user_response):
     flat.sort()
     req_tfidf = flat[-2]
     if(req_tfidf==0):
-        robo_response=robo_response+"I am sorry! I don't understand you"
+        robo_response=robo_response+"I am sorry! I could'nt understand you"
         return robo_response
     else:
         robo_response = robo_response+sent_tokensone[idx]
